@@ -23,19 +23,23 @@ snake_speed = 15
 
 font_style = pygame.font.SysFont('bahnschrift', 25)
 score_font = pygame.font.SysFont('comicsansms', 35)
+font_yummi = pygame.font.SysFont('comicsansms', 45)
 
 def Your_score(score):
     value = score_font.render('Ваш счет: ' + str(score), True, yellow)
     dis.blit(value, [0, 0])
 
-def our_snake(snake_block, snake_list):
-    for x in snake_list:
+def our_snake(snake_block, snake_List):
+    for x in snake_List:
         pygame.draw.rect(dis, black, [x[0], x[1], snake_block, snake_block])
 
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
-    dis.blit(mesg, [dis_width / 6, dis_height / 3])
+    dis.blit(mesg, [dis_width / 10, dis_height / 3])
 
+def message_yammi(msg, color):
+    mesg = font_yummi.render(msg, True, color)
+    dis.blit(mesg, [random.randrange(0, dis_width), random.randrange(0, dis_height)])
 
 def gameLoop():
     game_over = False
@@ -57,7 +61,7 @@ def gameLoop():
 
         while game_close == True:
             dis.fill(blue)
-            message('Ты проиграл Муахахах!\ Нажми Q-выход или C-играть снова ', red)
+            message('Ты проиграл Муахахах! Нажми Q-выход или C-играть снова ', red)
             pygame.display.update()
 
             for event in pygame.event.get():
@@ -84,9 +88,6 @@ def gameLoop():
                 elif event.key == pygame.K_DOWN:
                     x1_change = 0
                     y1_change = snake_block
-                elif event.key == pygame.K_SPACE:  # Чит, отановить змейку =)
-                    x1_change = 0
-                    y1_change = 0
 
         if x1 >= dis_width or x1 < 0 or y1 >= dis_height or y1 < 0:
             game_close = True
@@ -114,6 +115,8 @@ def gameLoop():
             foodx = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
             foody = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
             Length_of_snake += 1
+            message_yammi('ням!', red)
+            pygame.display.update()
 
         clock.tick(snake_speed)
 
